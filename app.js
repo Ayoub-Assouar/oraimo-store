@@ -2,14 +2,14 @@
 
 // ---- DATA ----
 const PRODUCTS = [
-  { id: 1, name: 'FreePods 4 Pro', category: 'audio', price: 349, badge: 'Best Seller', icon: '🎧', desc: 'ANC + 38H battery, Bluetooth 5.3, IPX5 waterproof', fourthwall: 'https://morocco-store-oraimo-shop.fourthwall.com' },
-  { id: 2, name: 'Watch ER AMOLED', category: 'wearable', price: 499, badge: 'New', icon: '⌚', desc: '1.43" AMOLED, health monitoring, BT calling, IP68', fourthwall: 'https://morocco-store-oraimo-shop.fourthwall.com' },
-  { id: 3, name: 'PowerPack 27000', category: 'power', price: 279, badge: 'Sale', icon: '🔋', desc: '27000mAh, 65W PD fast charge, 3 ports', fourthwall: 'https://morocco-store-oraimo-shop.fourthwall.com' },
-  { id: 4, name: 'SpaceBuds Z ANC', category: 'audio', price: 429, badge: 'New', icon: '🎵', desc: 'Active noise cancellation, 30H playtime, premium drivers', fourthwall: 'https://morocco-store-oraimo-shop.fourthwall.com' },
-  { id: 5, name: 'Watch Nova AM', category: 'wearable', price: 369, badge: null, icon: '⌚', desc: 'Smart calling, fitness tracking, 7-day battery', fourthwall: 'https://morocco-store-oraimo-shop.fourthwall.com' },
-  { id: 6, name: 'Charger Pro 65W', category: 'power', price: 149, badge: null, icon: '⚡', desc: 'GaN 65W, 3-in-1 ports, universal compatibility', fourthwall: 'https://morocco-store-oraimo-shop.fourthwall.com' },
-  { id: 7, name: 'Rover RGB Speaker', category: 'audio', price: 389, badge: 'New', icon: '🔊', desc: 'RGB lighting, 360° surround sound, 20H battery', fourthwall: 'https://morocco-store-oraimo-shop.fourthwall.com' },
-  { id: 8, name: 'SmartClip Holder', category: 'accessories', price: 89, badge: null, icon: '📱', desc: 'Magnetic mount, 360° rotation, universal fit', fourthwall: 'https://morocco-store-oraimo-shop.fourthwall.com' },
+  { id: 1, name: 'FreePods 4 Pro', category: 'audio', price: 349, badge: 'Best Seller', icon: '🎧', desc: 'ANC + 38H battery, Bluetooth 5.3, IPX5 waterproof', fourthwall: 'https://www.fourthwall.com' },
+  { id: 2, name: 'Watch ER AMOLED', category: 'wearable', price: 499, badge: 'New', icon: '⌚', desc: '1.43" AMOLED, health monitoring, BT calling, IP68', fourthwall: 'https://www.fourthwall.com' },
+  { id: 3, name: 'PowerPack 27000', category: 'power', price: 279, badge: 'Sale', icon: '🔋', desc: '27000mAh, 65W PD fast charge, 3 ports', fourthwall: 'https://www.fourthwall.com' },
+  { id: 4, name: 'SpaceBuds Z ANC', category: 'audio', price: 429, badge: 'New', icon: '🎵', desc: 'Active noise cancellation, 30H playtime, premium drivers', fourthwall: 'https://www.fourthwall.com' },
+  { id: 5, name: 'Watch Nova AM', category: 'wearable', price: 369, badge: null, icon: '⌚', desc: 'Smart calling, fitness tracking, 7-day battery', fourthwall: 'https://www.fourthwall.com' },
+  { id: 6, name: 'Charger Pro 65W', category: 'power', price: 149, badge: null, icon: '⚡', desc: 'GaN 65W, 3-in-1 ports, universal compatibility', fourthwall: 'https://www.fourthwall.com' },
+  { id: 7, name: 'Rover RGB Speaker', category: 'audio', price: 389, badge: 'New', icon: '🔊', desc: 'RGB lighting, 360° surround sound, 20H battery', fourthwall: 'https://www.fourthwall.com' },
+  { id: 8, name: 'SmartClip Holder', category: 'accessories', price: 89, badge: null, icon: '📱', desc: 'Magnetic mount, 360° rotation, universal fit', fourthwall: 'https://www.fourthwall.com' },
 ];
 
 const ORDERS = [
@@ -28,10 +28,16 @@ let currentFilter = 'all';
 // ---- DOM READY ----
 document.addEventListener('DOMContentLoaded', () => {
   renderNav();
-  showPage('home');
   setupCart();
   setupToast();
   updateDate();
+  // Build home content directly (window.showPage override not ready yet at this point)
+  const homeEl = document.getElementById('page-home');
+  if (homeEl) {
+    homeEl.innerHTML = buildHome();
+    renderHomeProducts();
+  }
+  setActiveNav('home');
 });
 
 // ---- NAVIGATION ----
@@ -83,11 +89,6 @@ function showPage(page) {
 }
 
 // ---- HOME PAGE ----
-document.addEventListener('DOMContentLoaded', () => {
-  const homeContent = document.getElementById('page-home');
-  if (!homeContent) return;
-  homeContent.innerHTML = buildHome();
-});
 
 function buildHome() {
   return `
@@ -513,7 +514,7 @@ function checkout() {
   if (cart.length === 0) { showToast('⚠️ Votre panier est vide'); return; }
   showToast('🛍 Redirection vers la boutique Fourthwall...');
   setTimeout(() => {
-    window.open('https://morocco-store-oraimo-shop.fourthwall.com', '_blank');
+    window.open('https://www.fourthwall.com', '_blank');
   }, 1000);
 }
 
@@ -541,7 +542,7 @@ const _origShowPage = showPage;
 window.showPage = function(page) {
   _origShowPage(page);
   setTimeout(() => {
-    if (page === 'home') { buildHomeContent(); renderHomeProducts(); }
+    if (page === 'home') { buildHomeContent(); }
     if (page === 'about') buildAbout();
     if (page === 'contact') buildContact();
   }, 10);
@@ -549,15 +550,13 @@ window.showPage = function(page) {
 
 function buildHomeContent() {
   const el = document.getElementById('page-home');
-  if (el && el.innerHTML.trim() === '') {
+  if (el) {
     el.innerHTML = buildHome();
+    renderHomeProducts();
   }
 }
 
 // Initial page render on load
 window.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
-    buildHomeContent();
-    renderHomeProducts();
-  }, 50);
+  buildHomeContent();
 });
