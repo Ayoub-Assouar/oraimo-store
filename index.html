@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Morocco Store Oraimo — Tech Premium au Maroc</title>
+  <meta name="description" content="Revendeur officiel Oraimo au Maroc. Écouteurs, montres connectées, power banks et accessoires tech livrés dans tout le Maroc." />
+  <meta name="author" content="Morocco Store Oraimo" />
+  <meta name="copyright" content="© 2024 Morocco Store Oraimo. Tous droits réservés." />
+  <meta property="og:title" content="Morocco Store Oraimo" />
+  <meta property="og:description" content="Tech Premium Oraimo au Maroc — Livraison rapide, produits 100% originaux" />
+  <meta property="og:type" content="website" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav id="main-nav"></nav>
+
+  <!-- PAGES -->
+
+  <!-- HOME -->
+  <div class="page active" id="page-home"></div>
+
+  <!-- PRODUCTS -->
+  <div class="page" id="page-products">
+    <div class="pattern-strip"></div>
+    <section class="products-section" style="padding-top:120px;">
+      <div class="section-header">
+        <span class="section-label">Catalogue complet</span>
+        <h2>Tous nos produits<br>Oraimo</h2>
+        <p>Découvrez notre sélection de produits tech premium livrés partout au Maroc</p>
+      </div>
+      <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all" onclick="renderProducts('all')">Tout voir</button>
+        <button class="filter-btn" data-filter="audio" onclick="renderProducts('audio')">🎧 Audio</button>
+        <button class="filter-btn" data-filter="wearable" onclick="renderProducts('wearable')">⌚ Montres</button>
+        <button class="filter-btn" data-filter="power" onclick="renderProducts('power')">🔋 Power</button>
+        <button class="filter-btn" data-filter="accessories" onclick="renderProducts('accessories')">📱 Accessoires</button>
+      </div>
+      <div class="products-grid" id="products-grid"></div>
+
+      <!-- FOURTHWALL CTA -->
+      <div style="margin-top:80px;background:var(--dark);border-radius:24px;padding:60px;text-align:center;">
+        <div style="font-size:48px;margin-bottom:20px;">🛍</div>
+        <h3 style="color:#fff;font-size:28px;font-family:'Syne',sans-serif;margin-bottom:16px;">Commander facilement via Fourthwall</h3>
+        <p style="color:rgba(255,255,255,0.55);margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.7;">
+          Cliquez sur n'importe quel produit ou utilisez notre boutique Fourthwall pour passer votre commande en toute sécurité. Livraison rapide dans tout le Maroc.
+        </p>
+        <a href="https://www.fourthwall.com" target="_blank" style="display:inline-flex;align-items:center;gap:10px;background:var(--red);color:#fff;border-radius:50px;padding:18px 40px;font-size:16px;font-weight:600;text-decoration:none;transition:all 0.3s;">
+          🔗 Accéder à la boutique Fourthwall
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="page" id="page-about"></div>
+
+  <!-- CONTACT -->
+  <div class="page" id="page-contact"></div>
+
+  <!-- DASHBOARD -->
+  <div class="page" id="page-dashboard"></div>
+
+  <!-- CART SIDEBAR -->
+  <div class="cart-overlay" id="cart-overlay"></div>
+  <div class="cart-sidebar" id="cart-sidebar">
+    <div class="cart-head">
+      <h3>🛒 Mon Panier</h3>
+      <button class="cart-close" onclick="toggleCart()">✕</button>
+    </div>
+    <div class="cart-items" id="cart-items">
+      <div class="cart-empty">
+        <div class="empty-icon">🛒</div>
+        <p>Votre panier est vide</p>
+      </div>
+    </div>
+    <div class="cart-foot">
+      <div class="cart-total">
+        <span>Total</span>
+        <strong id="cart-total-amount">0 MAD</strong>
+      </div>
+      <button class="checkout-btn" onclick="checkout()">
+        🔗 Commander via Fourthwall
+      </button>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo">
+          <div class="logo-mark" style="background:linear-gradient(135deg,#E8292A,#006233)">M</div>
+          <span style="font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:#fff">
+            Morocco Store <em style="color:#C9A84C;font-style:normal">Oraimo</em>
+          </span>
+        </div>
+        <p>Revendeur officiel Oraimo au Maroc. Tech premium, livraison rapide, produits 100% authentiques.</p>
+        <p style="margin-top:16px;font-size:12px;color:rgba(255,255,255,0.25);">
+          © 2024 Morocco Store Oraimo. Tous droits réservés.<br>
+          Site créé et détenu par Morocco Store Oraimo.
+        </p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#" onclick="showPage('home');return false">Accueil</a></li>
+          <li><a href="#" onclick="showPage('products');return false">Produits</a></li>
+          <li><a href="#" onclick="showPage('about');return false">À propos</a></li>
+          <li><a href="#" onclick="showPage('contact');return false">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Catégories</h4>
+        <ul>
+          <li><a href="#" onclick="showPage('products');renderProducts('audio');return false">🎧 Audio</a></li>
+          <li><a href="#" onclick="showPage('products');renderProducts('wearable');return false">⌚ Montres</a></li>
+          <li><a href="#" onclick="showPage('products');renderProducts('power');return false">🔋 Power</a></li>
+          <li><a href="#" onclick="showPage('products');renderProducts('accessories');return false">📱 Accessoires</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="#">📍 Casablanca, Maroc</a></li>
+          <li><a href="#">📱 +212 6XX XXX XXX</a></li>
+          <li><a href="#">✉️ contact@moroccostore-oraimo.ma</a></li>
+          <li><a href="https://www.fourthwall.com" target="_blank">🛍 Boutique Fourthwall</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 Morocco Store Oraimo — Tous droits réservés. Ce site et son contenu sont la propriété exclusive de Morocco Store Oraimo.</p>
+      <div class="footer-flag">
+        <span class="flag-stripe" style="background:#E8292A"></span>
+        <span class="flag-stripe" style="background:#fff;border:1px solid #ddd"></span>
+        <span class="flag-stripe" style="background:#006233"></span>
+        Fait avec ❤️ au Maroc
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
